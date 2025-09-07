@@ -4,12 +4,14 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from shot import Shot
+from counter import Counter
 
 def main():
     pygame.init()
     
     clock = pygame.time.Clock()
     dt = 0
+    counter = Counter()
     
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     
@@ -42,11 +44,12 @@ def main():
         for asteroid in asteroids:
             if asteroid.collision(player):
                 print("Game over!")
+                print(f"Final Score: {counter.score}")
                 return
             for shot in shots:
                 if asteroid.collision(shot):
                     shot.kill()
-                    asteroid.split()
+                    asteroid.split(counter)
         for obj in drawable:
             obj.draw(screen)
         pygame.display.flip()
